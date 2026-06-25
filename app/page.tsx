@@ -16,7 +16,7 @@ type Soldier = {
   score: number;
 };
 
-const fallbackTeamColors = ["#ef4444", "#3b82f6", "#22c55e", "#f59e0b"];
+const defaultTeamColor = "#74785b";
 
 function records(value: unknown): unknown[] {
   if (Array.isArray(value)) {
@@ -38,21 +38,26 @@ function parseTeams(value: unknown): Team[] {
       ): item is {
         teamName: string;
         score: number;
-        color?: string;
+        color?: unknown;
+        teamColor?: unknown;
+        primaryColor?: unknown;
       } =>
         typeof item === "object" &&
         item !== null &&
         typeof (item as { teamName?: unknown }).teamName === "string" &&
         typeof (item as { score?: unknown }).score === "number",
     )
-    .map((item, index) => ({
-      name: item.teamName,
-      score: item.score,
-      color:
-        typeof item.color === "string"
-          ? item.color
-          : fallbackTeamColors[index % fallbackTeamColors.length],
-    }))
+    .map((item) => {
+      const backendColor = [item.color, item.teamColor, item.primaryColor].find(
+        (color): color is string => typeof color === "string" && color.trim() !== "",
+      );
+
+      return {
+        name: item.teamName,
+        score: item.score,
+        color: backendColor ?? defaultTeamColor,
+      };
+    })
     .sort((a, b) => b.score - a.score);
 }
 
@@ -90,6 +95,7 @@ export default function Home() {
           teams?: unknown;
           individuals?: unknown;
         } | null;
+        console.log("Firebase leaderboards data:", value);
         setTeams(parseTeams(value?.teams));
         setSoldiers(parseSoldiers(value?.individuals));
         setLoadError(false);
@@ -191,7 +197,7 @@ export default function Home() {
                   <td>
                     <span
                       className="dot"
-                      style={{ backgroundColor: teamColors[team] ?? "#74785b" }}
+                      style={{ backgroundColor: teamColors[team] ?? defaultTeamColor }}
                     />
                     {team}
                   </td>
