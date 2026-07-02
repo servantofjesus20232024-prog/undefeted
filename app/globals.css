@@ -371,6 +371,495 @@ tbody tr:hover {
   transform: rotate(45deg);
 }
 
+.mapTab {
+  position: fixed;
+  right: 0;
+  bottom: 28px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 16px 12px 18px;
+  border: 1px solid rgba(209, 154, 100, 0.65);
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  background: rgba(18, 19, 14, 0.95);
+  color: #efeddd;
+  font: 12px monospace;
+  letter-spacing: 0.16em;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
+  cursor: pointer;
+}
+
+.mapTab strong {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 28px;
+  border: 1px solid #74785b;
+  color: #d19a64;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.mapTab:hover,
+.mapTab:focus-visible {
+  background: #20231a;
+  outline: none;
+}
+
+.mapOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.mapBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background:
+    linear-gradient(rgba(11, 12, 9, 0.72), rgba(11, 12, 9, 0.84)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(116, 120, 91, 0.08) 3px 4px);
+  cursor: pointer;
+}
+
+.zoneMap {
+  position: relative;
+  width: min(1180px, 100%);
+  max-height: min(860px, calc(100vh - 56px));
+  overflow: hidden;
+  border: 1px solid rgba(209, 154, 100, 0.45);
+  background:
+    linear-gradient(rgba(23, 25, 20, 0.96), rgba(23, 25, 20, 0.98)),
+    linear-gradient(#555943 1px, transparent 1px),
+    linear-gradient(90deg, #555943 1px, transparent 1px);
+  background-size: auto, 30px 30px, 30px 30px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.58);
+}
+
+.zoneMapHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #555943;
+  background: rgba(18, 19, 14, 0.88);
+}
+
+.zoneMapHeader p {
+  margin: 0 0 6px;
+  color: #bc6b35;
+  font: 10px monospace;
+  letter-spacing: 0.2em;
+}
+
+.zoneMapHeader h2 {
+  margin: 0;
+  color: #efeddd;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.closeMap {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #74785b;
+  background: #20231a;
+  color: #efeddd;
+  font: 15px monospace;
+  cursor: pointer;
+}
+
+.closeMap:hover,
+.closeMap:focus-visible {
+  border-color: #d19a64;
+  outline: none;
+}
+
+.mapLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #444735;
+  background: rgba(13, 14, 10, 0.72);
+}
+
+.mapLegend span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  color: #dedbc7;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.mapLegend i {
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  border: 1px solid rgba(239, 237, 221, 0.4);
+  transform: rotate(45deg);
+}
+
+.zoneMapViewport {
+  position: relative;
+  max-height: calc(min(860px, 100vh - 56px) - 126px);
+  overflow: auto;
+  background:
+    radial-gradient(circle at 20% 24%, rgba(209, 154, 100, 0.12), transparent 24%),
+    radial-gradient(circle at 76% 65%, rgba(116, 120, 91, 0.18), transparent 28%),
+    linear-gradient(rgba(31, 34, 26, 0.9), rgba(17, 19, 14, 0.98));
+  scrollbar-width: thin;
+  scrollbar-color: #74785b transparent;
+}
+
+.zoneEmpty {
+  position: absolute;
+  inset: 24px;
+  z-index: 2;
+  background: rgba(23, 25, 20, 0.92);
+}
+
+.territoryCanvas {
+  position: relative;
+  width: 1240px;
+  height: 860px;
+  min-width: 100%;
+  background:
+    linear-gradient(rgba(15, 16, 12, 0.18), rgba(15, 16, 12, 0.48)),
+    linear-gradient(25deg, transparent 0 42%, rgba(188, 107, 53, 0.12) 42% 43%, transparent 43%),
+    linear-gradient(155deg, transparent 0 54%, rgba(116, 120, 91, 0.22) 54% 55%, transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(116, 120, 91, 0.12) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(116, 120, 91, 0.12) 31px 32px);
+}
+
+.territoryCanvas::before {
+  position: absolute;
+  inset: 36px;
+  border: 1px solid rgba(116, 120, 91, 0.34);
+  clip-path: polygon(4% 12%, 18% 3%, 38% 6%, 52% 2%, 72% 8%, 96% 5%, 94% 88%, 76% 94%, 58% 90%, 41% 96%, 22% 90%, 6% 96%);
+  background:
+    linear-gradient(135deg, rgba(116, 120, 91, 0.1), rgba(188, 107, 53, 0.08)),
+    repeating-linear-gradient(45deg, rgba(222, 219, 199, 0.08) 0 1px, transparent 1px 18px);
+  content: "";
+}
+
+.mapRegion {
+  --zone-color: #74785b;
+  position: absolute;
+  left: var(--zone-x);
+  top: var(--zone-y);
+  width: var(--zone-w);
+  height: var(--zone-h);
+  padding: 2px;
+  border: 0;
+  clip-path: var(--zone-shape);
+  background: rgba(85, 89, 67, 0.86);
+  cursor: pointer;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.34));
+  text-align: left;
+}
+
+.mapRegion.isCaptured {
+  background: var(--zone-color);
+}
+
+.mapRegion::before {
+  position: absolute;
+  inset: 2px;
+  clip-path: var(--zone-shape);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--zone-color) 54%, #25281e), rgba(18, 19, 14, 0.86)),
+    repeating-linear-gradient(45deg, rgba(239, 237, 221, 0.08) 0 1px, transparent 1px 13px);
+  content: "";
+}
+
+.mapRegion:not(.isCaptured)::before {
+  background:
+    linear-gradient(145deg, rgba(47, 51, 38, 0.96), rgba(18, 19, 14, 0.9)),
+    repeating-linear-gradient(45deg, rgba(239, 237, 221, 0.06) 0 1px, transparent 1px 13px);
+}
+
+.mapRegion:hover {
+  z-index: 3;
+}
+
+.mapRegion:hover::before,
+.mapRegion:focus-visible::before {
+  filter: brightness(1.12);
+}
+
+.mapRegion:focus-visible {
+  z-index: 4;
+  outline: 2px solid #d19a64;
+  outline-offset: 3px;
+}
+
+.regionInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  height: 100%;
+  padding: 14px 16px;
+  overflow: hidden;
+  color: #efeddd;
+}
+
+.regionTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font: 11px monospace;
+}
+
+.regionTopline span {
+  color: rgba(239, 237, 221, 0.72);
+  font-variant-numeric: tabular-nums;
+}
+
+.regionTopline strong {
+  max-width: 62%;
+  overflow: hidden;
+  color: #fff9df;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.regionInner h3 {
+  margin: 10px 0 6px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+}
+
+.regionInner p {
+  max-height: 24px;
+  margin: 0 0 10px;
+  overflow: hidden;
+  color: #d19a64;
+  font: 9px monospace;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.regionScores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0;
+}
+
+.regionScores div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 4px 6px;
+  border: 1px solid rgba(239, 237, 221, 0.14);
+  background: rgba(8, 9, 7, 0.42);
+}
+
+.regionScores dt,
+.regionScores dd {
+  margin: 0;
+}
+
+.regionScores dt span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(239, 237, 221, 0.42);
+  transform: rotate(45deg);
+}
+
+.regionScores dd {
+  overflow: hidden;
+  color: #fffbe6;
+  font: 700 11px monospace;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zoneDetailOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.zoneDetailBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(8, 9, 7, 0.58);
+  cursor: pointer;
+}
+
+section.zoneDetailModal {
+  --zone-detail-color: #74785b;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(560px, 100%);
+  min-height: 0;
+  max-height: min(720px, calc(100vh - 72px));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, var(--zone-detail-color) 72%, #efeddd);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--zone-detail-color) 28%, rgba(24, 27, 21, 0.98)),
+      rgba(15, 17, 13, 0.99) 48%
+    ),
+    linear-gradient(#555943 1px, transparent 1px),
+    linear-gradient(90deg, #555943 1px, transparent 1px);
+  background-size: auto, 26px 26px, 26px 26px;
+  box-shadow:
+    0 0 34px color-mix(in srgb, var(--zone-detail-color) 34%, transparent),
+    0 24px 70px rgba(0, 0, 0, 0.62);
+}
+
+.zoneDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border-bottom: 1px solid color-mix(in srgb, var(--zone-detail-color) 62%, #555943);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--zone-detail-color) 34%, rgba(18, 19, 14, 0.94)),
+      rgba(18, 19, 14, 0.88)
+    );
+}
+
+.zoneDetailHeader p {
+  margin: 0 0 6px;
+  color: color-mix(in srgb, var(--zone-detail-color) 74%, #efeddd);
+  font: 10px monospace;
+  letter-spacing: 0.2em;
+}
+
+.zoneDetailHeader h2 {
+  margin: 0;
+  color: #efeddd;
+  font-size: 22px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.zoneDetailStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border-bottom: 1px solid color-mix(in srgb, var(--zone-detail-color) 52%, #444735);
+  background: color-mix(in srgb, var(--zone-detail-color) 52%, #444735);
+}
+
+.zoneDetailStats div {
+  min-width: 0;
+  padding: 16px;
+  background: rgba(13, 14, 10, 0.78);
+}
+
+.zoneDetailStats span {
+  display: block;
+  margin-bottom: 7px;
+  color: #999b82;
+  font: 10px monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.zoneDetailStats strong {
+  display: block;
+  color: #fffbe6;
+  font-size: 16px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.zoneDetailScores {
+  padding: 18px 20px 20px;
+}
+
+.zoneDetailScores h3 {
+  margin: 0 0 12px;
+  color: color-mix(in srgb, var(--zone-detail-color) 70%, #efeddd);
+  font: 11px monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zoneDetailScores dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.zoneDetailScores dl div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(239, 237, 221, 0.14);
+  background: rgba(8, 9, 7, 0.42);
+}
+
+.zoneDetailScores dt,
+.zoneDetailScores dd {
+  margin: 0;
+}
+
+.zoneDetailScores dt {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #efeddd;
+  font-weight: 700;
+}
+
+.zoneDetailScores dt span {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-right: 9px;
+  border: 1px solid rgba(239, 237, 221, 0.42);
+  transform: rotate(45deg);
+}
+
+.zoneDetailScores dd {
+  color: #fffbe6;
+  font: 800 16px monospace;
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 760px) {
   body {
     overflow: auto;
@@ -404,5 +893,47 @@ tbody tr:hover {
   .teamList,
   .tableWrap {
     margin-top: 24px;
+  }
+
+  .mapTab {
+    bottom: 18px;
+  }
+
+  .mapOverlay {
+    padding: 14px;
+  }
+
+  .zoneMapViewport {
+    max-height: calc(100vh - 160px);
+  }
+
+  .territoryCanvas {
+    width: 1040px;
+    height: 780px;
+  }
+
+  .regionInner {
+    padding: 12px 14px;
+  }
+
+  .regionInner h3 {
+    font-size: 13px;
+  }
+
+  .regionScores div {
+    padding: 3px 5px;
+  }
+
+  .zoneDetailOverlay {
+    padding: 14px;
+  }
+
+  .zoneDetailStats {
+    grid-template-columns: 1fr;
+  }
+
+  .zoneDetailScores dl div {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 }
