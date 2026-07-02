@@ -232,7 +232,7 @@ export default function Home() {
           <span className="eventBadgeStar" />
         </div>
         <div className="eventBadgeText">
-          <h1>undefeted</h1>
+          <h1>undefeated</h1>
         </div>
       </div>
 
