@@ -4,13 +4,13 @@ import { useEffect } from "react";
 
 export default function NotFound() {
   useEffect(() => {
-    window.location.replace("/undefeted/");
+    window.location.replace("/undefeated/");
   }, []);
 
   return (
     <main className="notFoundRedirect">
       <p>Redirecting</p>
-      <a href="/undefeted/">Open scoreboard</a>
+      <a href="/undefeated/">Open scoreboard</a>
     </main>
   );
 }

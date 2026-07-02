@@ -227,7 +227,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="eventBadge" aria-label="undefeted event title">
+      <div className="eventBadge" aria-label="undefeated event title">
         <div className="eventBadgeImage" aria-hidden="true">
           <span className="eventBadgeRing" />
           <span className="eventBadgeStar" />
