@@ -233,6 +233,7 @@ export default function Home() {
         </div>
         <div className="eventBadgeText">
           <h1>undefeated</h1>
+          
         </div>
       </div>
 
