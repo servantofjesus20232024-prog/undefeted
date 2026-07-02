@@ -52,6 +52,7 @@ const mapTerritories = [
   { x: 83, y: 64, w: 15, h: 21, shape: "10% 0, 100% 18%, 88% 100%, 0 80%" },
 ];
 
+
 function records(value: unknown): unknown[] {
   if (Array.isArray(value)) {
     return value.filter(Boolean);
