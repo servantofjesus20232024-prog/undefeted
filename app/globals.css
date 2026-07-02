@@ -21,6 +21,29 @@ main {
   height: 100vh;
 }
 
+.notFoundRedirect {
+  display: flex;
+  grid-template-columns: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #171914;
+  color: #efeddd;
+}
+
+.notFoundRedirect p {
+  margin: 0;
+  color: #d19a64;
+  font: 12px monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.notFoundRedirect a {
+  color: #efeddd;
+}
+
 .loadingOverlay {
   position: absolute;
   inset: 0;
